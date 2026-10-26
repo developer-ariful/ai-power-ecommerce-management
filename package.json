@@ -1,0 +1,27 @@
+{
+  "name": "ai-ecommerce-platform",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "workspaces": [
+    "apps/api",
+    "apps/web"
+  ],
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "concurrently -k -n API,WEB -c blue,green \"npm run dev --workspace=@ai-ecommerce/api\" \"npm run dev --workspace=apps/web\"",
+    "dev:api": "npm run dev --workspace=@ai-ecommerce/api",
+    "dev:web": "npm run dev --workspace=apps/web",
+    "build": "npm run build --workspace=@ai-ecommerce/api && npm run build --workspace=apps/web",
+    "typecheck": "npm run typecheck --workspace=@ai-commerce/api"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^10.0.6"
+  }
+}

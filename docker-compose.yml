@@ -1,0 +1,57 @@
+service: 
+  postgres:
+    image: postgres:16-alpine
+    container_name: ai-ecommerce-posgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-ai_commerce}
+      POSTGRES_USER: ${POSTGRES_USER:-ai_commerce}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-ecom$#123}
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes: 
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck: 
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-ai_ecommerce} - d ${POSTGRES_DB:-ai_ecommerce}"]
+      interval: 5s
+      timeout:5s
+      retries: 10
+  api:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+    conttainer_name: ai-ecommerce-api
+    restart: unless-stopped
+    environment:
+      NODE_ENV: development
+      PORT: 4000
+      DATABASE_URL: postgresql://${POSTGRES_USER:-ai_ecommerce}:${POSTGRES_PASSWORD:-ecom$#123}@postgres:5432/${POSTGRES_DB:-ai_ecommerce}?schema=public
+    ports:
+      - "${API_PORT:-4000}:4000"
+    volumes:
+      - ./apps/api/src:/app/apps/api/src
+      - ./apps/api/prisma:/app/apps/api/prisma
+    depends_on:
+      postgres:
+        condition: service_healthy
+    command: sh -c "npm run db:generate --workspace=@ai-commerce/api && npm run dev --workspace=@ai-ecommece/api"
+  web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+    container_name: ai-ecommerce-web
+    restart: unless-stopped
+    environment:
+      VITE_API_BASE_URL:http://localhost:${API_PORT:-4000}
+    posts:
+      - "${WEB_PORT:-5173}:5173"
+    volumes:
+      - ./apps/web/src:/app/apps/web/src
+      - ./apps/web/index.html:/app/apps/web/index.html
+      - ./apps/web/vite.config.ts:/app/apps/web/vite.config.ts
+    depends_on:
+      - api
+    command: npm run dev --workspace=@ai-commerce/web -- --host 0.0.0.0
+
+volumes:
+  postgres_data:
