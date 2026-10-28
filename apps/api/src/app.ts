@@ -1,7 +1,6 @@
 import express, { type Express, type Request, type Response } from 'express';
 import helmet from 'helmet';
-import cors from 'cors'
-import { timeStamp } from 'node:console';
+import cors from 'cors';
 
 const app: Express = express();
 
