@@ -17,12 +17,13 @@
     "dev:api": "npm run dev --workspace=@ai-ecommerce/api",
     "dev:web": "npm run dev --workspace=apps/web",
     "build": "npm run build --workspace=@ai-ecommerce/api && npm run build --workspace=apps/web",
-    "typecheck": "npm run typecheck --workspace=@ai-commerce/api"
+    "typecheck": "npm run typecheck --workspace=@ai-ecommerce/api"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "concurrently": "^10.0.6"
+    "concurrently": "^10.0.6",
+    "dotenv": "^18.0.9"
   }
 }

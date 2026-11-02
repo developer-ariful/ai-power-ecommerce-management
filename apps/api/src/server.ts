@@ -1,10 +1,9 @@
-import "dotenv/config";
+
 import app from "./app.js";
+import { env } from "./config/env.js";
 
 
-const PORT = Number(process.env.PORT) || 4000;
-
-app.listen(PORT, ()=>{
-    console.log(`API server running at http://localhost:${PORT}`);
-    console.log(`Health check: http://localhost:${PORT}/api/v1/health`)
+app.listen(env.PORT,()=>{
+    console.log(`Server is running on port ${env.PORT}`);
+    console.log(`Health check endpoint: http://localhost:${env.PORT}/api/v1/health`);
 })
