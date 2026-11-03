@@ -1,6 +1,7 @@
 
 import { ErrorRequestHandler } from "express";
 import { AppError } from "./app-error.js";
+import { ApiResponse } from "../types/api-response.types.js";
 export const errorMiddleware: ErrorRequestHandler =(error, req, res, next )=>{
     let statusCode =  error?.statusCode || error?.status || 500;
     let message = error.message || "Internal Server Error";
@@ -17,12 +18,12 @@ export const errorMiddleware: ErrorRequestHandler =(error, req, res, next )=>{
         console.error(error);
     }
 
-    res.status(statusCode).json({
+   const response: ApiResponse<null> = {
         success: false,
-        message, 
-        path: req.originalUrl,
-        timeStamp: new Date().toISOString()
-    })
+        message,
+        data: null
+    };
+    return res.status(statusCode).json(response);
 }
 
 

@@ -13,7 +13,8 @@ for (const variable of requiredEnvVariables) {
 }
 
 export const env = {
-    NODE_ENV: process.env.NODE_ENV || "development",
-    PORT: Number(process.env.API_PORT) || 4000,
+    NODE_ENV: process.env.NODE_ENV ?? "development",
+    PORT: Number(process.env.API_PORT) ?? 4000,
     DATABASE_URL: process.env.DATABASE_URL!,
+    CLIENT_URL: process.env.CLIENT_URL ?? "http://localhost:5173",
 }
