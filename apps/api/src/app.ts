@@ -6,6 +6,9 @@ import { AppError } from './shared/errors/app-error.js';
 import { env } from './config/env.js';
 import { requestLogger } from './middlewares/request-logger.middleware.js';
 import { sendSuccess } from './shared/utils/api-response.js';
+import apiRoutes from './routes/index.js';
+
+
 const app: Express = express();
 
 // 1. Security Headers
@@ -32,14 +35,8 @@ app.get("/api/v1/test-error", (_req: Request, _res: Response, next: NextFunction
     next(new AppError("Not found Error", 404));
 });
 
-
-app.get("/api/v1/health", (_req: Request, res:Response)=>{
-   return sendSuccess(
-    res, 
-    "API is running",
-    {status: "healthy"},
-   )
-})
+    // Versioned API routes
+    app.use("/api", apiRoutes);
 
 // 5. Centralize error handler must last after all routes
 
