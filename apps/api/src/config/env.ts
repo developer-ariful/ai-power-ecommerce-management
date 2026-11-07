@@ -13,7 +13,7 @@ for (const variable of requiredEnvVariables) {
         throw new Error(`Missing required environment variable: ${variable}`);
     }
 }
-console.log(process.env.DATABSE_URL)
+// process.env.DATABSE_URL=`postgresql://${process.env.POSTGRES_USER}:${process.env.POSTGRES_PASSWORD}@postgres:5432/${process.env.POSTGRES_DB}?schema=public`
 
 export const env = {
     NODE_ENV: process.env.NODE_ENV ?? "development",

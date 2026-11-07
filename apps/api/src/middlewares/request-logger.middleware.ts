@@ -8,13 +8,18 @@ export const requestLogger: RequestHandler = (req, res, next) => {
     res.on("finish", () => {
         const duration = Date.now() - startTime;
 
-        console.log({
+        const log={
             method: req.method,
             url: req.originalUrl,
             statusCode: res.statusCode,
             duration: `${duration}ms`,
+            timestamp: new Date().toISOString(),
 
-        })
+        }
+
+        console.log(
+            `[${log.timestamp}] ${log.method} ${log.url} ${log.statusCode} ${log.duration}`,
+        )
     })
     next();
 } 

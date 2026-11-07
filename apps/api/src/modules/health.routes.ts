@@ -23,7 +23,7 @@ router.get("/ready", async (_req: Request, res: Response, next: NextFunction) =>
 
     try {
         // Test PostgreSQL databse connection
-        await prisma.$queryRaw`SELECT 1`;
+        await prisma.$queryRaw`SELECT 1::int AS result`;
         return sendSuccess(
             res,
             "Aplication and database are ready",

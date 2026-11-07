@@ -5,7 +5,6 @@ import { errorMiddleware } from "./shared/errors/error.middleware.js";
 import { AppError } from './shared/errors/app-error.js';
 import { env } from './config/env.js';
 import { requestLogger } from './middlewares/request-logger.middleware.js';
-import { sendSuccess } from './shared/utils/api-response.js';
 import apiRoutes from './routes/index.js';
 
 
