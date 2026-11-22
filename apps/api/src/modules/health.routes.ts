@@ -26,11 +26,11 @@ router.get("/ready", async (_req: Request, res: Response, next: NextFunction) =>
         await prisma.$queryRaw`SELECT 1::int AS result`;
         return sendSuccess(
             res,
-            "Aplication and database are ready",
+            "Application and database are ready",
             {
                 status: "ready",
                 database: "connected",
-                timesStamp: new Date().toISOString(),
+                timestamp: new Date().toISOString(),
 
             }
         )

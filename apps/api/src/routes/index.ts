@@ -1,5 +1,6 @@
 import { Router } from "express";
 import healthRoutes from "../modules/health.routes.js";
+import userRoutes from "../modules/users/user.routes.js";
 
 const router = Router();
 
@@ -12,7 +13,7 @@ v1Router.use('/health', healthRoutes)
 // Add module routes here in ther future.
 // Example:
 // v1Router.use("/products", productRoutes);
-// v1Router.use("/users", userRoutes);
+v1Router.use("/users", userRoutes);
 // v1Router.use("/orders", orderRoutes):
 
 router.use("/v1", v1Router);

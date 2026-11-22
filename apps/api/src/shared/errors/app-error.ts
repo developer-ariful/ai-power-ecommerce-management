@@ -15,4 +15,5 @@ export class AppError extends Error{
             captureStackTrace?: (target: object, constructor?: Function) => void;
         }).captureStackTrace?.(this, this.constructor);
     }
-}
+};
+

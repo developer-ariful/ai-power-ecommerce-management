@@ -1,4 +1,4 @@
-import express, { NextFunction, type ErrorRequestHandler, type Express, type Request, type Response } from 'express';
+import express, { NextFunction, type Express, type Request, type Response } from 'express';
 import helmet from 'helmet';
 import cors from 'cors';
 import { errorMiddleware } from "./shared/errors/error.middleware.js";
@@ -6,6 +6,7 @@ import { AppError } from './shared/errors/app-error.js';
 import { env } from './config/env.js';
 import { requestLogger } from './middlewares/request-logger.middleware.js';
 import apiRoutes from './routes/index.js';
+import { notFoundMiddleware } from './middlewares/not-found.middleware.js';
 
 
 const app: Express = express();
@@ -19,7 +20,7 @@ app.use(cors({
     credentials: true,
 }));
 
-// 3. Request Logger
+// 3. Request Loggers
 app.use(requestLogger);
 
 
@@ -29,13 +30,16 @@ app.use(express.urlencoded({ extended: true }));
 
 // API Routes will be registerd here
 
-app.get("/api/v1/test-error", (_req: Request, _res: Response, next: NextFunction)=>{
+app.get("/api/v1/test-error", (_req: Request, _res: Response, next: NextFunction) => {
     // Simulate an error for testing purposes
     next(new AppError("Not found Error", 404));
 });
 
-    // Versioned API routes
-    app.use("/api", apiRoutes);
+// Versioned API routes
+app.use("/api", apiRoutes);
+
+// Not Found Middleware
+app.use(notFoundMiddleware)
 
 // 5. Centralize error handler must last after all routes
 
